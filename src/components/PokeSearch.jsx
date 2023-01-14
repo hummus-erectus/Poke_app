@@ -268,7 +268,7 @@ useEffect(() => {
 
         {pokemon.id<=905 ?
           <div className="container mx-auto card-outer p-5 m-10 bg-yellow-300 rounded-3xl text-black font-futura w-96">
-            <div style={{ backgroundImage: `url(${bgImage})` }}className="card-inner p-3 bg-hero bg-no-repeat bg-cover bg-center bg-fixed">
+            <div style={{ backgroundImage: `url(${bgImage})` }}className="card-inner p-3 bg-hero bg-no-repeat bg-cover bg-center">
               <div className="card-top flex text-2xl mx-3">
                 <div className="name grow text-3xl">{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</div> 
                 <div className="pokedexNumber text-orange-600	">#{pokemon.id}</div>
