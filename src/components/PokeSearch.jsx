@@ -1,22 +1,26 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
-import { FaEye, FaSkull, FaMountain, FaLeaf, FaGhost, FaFeatherAlt, FaFistRaised, FaBug } from "react-icons/fa"
-import { TbSnowflake } from "react-icons/tb"
-import { BsDropletFill, BsNutFill, BsRecordCircleFill } from "react-icons/bs"
-import { GiStoneSphere, GiDragonSpiral } from "react-icons/gi"
-import { HiFire, HiOutlineSparkles  } from "react-icons/hi"
-import { AiFillThunderbolt } from "react-icons/ai"
-import { WiMoonAltWaxingCrescent3 } from "react-icons/wi"
 
-//Change all to png?
-import bgBlue from '../assets/bgBlue.svg'
-import bgGreen from '../assets/bgGreen.svg'
-import bgGrey from '../assets/bgGrey.svg'
-import bgOrange from '../assets/bgOrange.svg'
-import bgPurple from '../assets/bgPurple.svg'
-import bgWhite from '../assets/bgWhite.svg'
-import bgYellow from '../assets/bgYellow.svg'
-import bgRed from '../assets/bgRed.png'
+
+// import { FaEye, FaSkull, FaMountain, FaLeaf, FaGhost, FaFeatherAlt, FaFistRaised, FaBug } from "react-icons/fa"
+// import { TbSnowflake } from "react-icons/tb"
+// import { BsDropletFill, BsNutFill, BsRecordCircleFill } from "react-icons/bs"
+// import { GiStoneSphere, GiDragonSpiral } from "react-icons/gi"
+// import { HiFire, HiOutlineSparkles  } from "react-icons/hi"
+// import { AiFillThunderbolt } from "react-icons/ai"
+// import { WiMoonAltWaxingCrescent3 } from "react-icons/wi"
+
+// //Change all to png?
+// import bgBlue from '../assets/bgBlue.svg'
+// import bgGreen from '../assets/bgGreen.svg'
+// import bgGrey from '../assets/bgGrey.svg'
+// import bgOrange from '../assets/bgOrange.svg'
+// import bgPurple from '../assets/bgPurple.svg'
+// import bgWhite from '../assets/bgWhite.svg'
+// import bgYellow from '../assets/bgYellow.svg'
+// import bgRed from '../assets/bgRed.png'
+
+import PokeCard from "./PokeCard"
 
 
 
@@ -28,12 +32,12 @@ export default function PokeAPI() {
   const [species, setSpecies] = useState('')
   const [abilities, setAbilities] = useState('')
   
-  const [description, setDescription] = useState('')
-  const [bgImage, setBgImage] = useState('')
-  const [typeIcon, setTypeIcon] = useState('')
-  const [circleColor, setCircleColor] = useState('')
+  // const [description, setDescription] = useState('')
+  // const [bgImage, setBgImage] = useState('')
+  // const [typeIcon, setTypeIcon] = useState('')
+  // const [circleColor, setCircleColor] = useState('')
 
-  const [abilityArray, setAbilityArray] = useState([])
+  // const [abilityArray, setAbilityArray] = useState([])
 
 
   
@@ -66,6 +70,7 @@ export default function PokeAPI() {
       }
       
       // Try to refactor this
+
       const getAbilityData = async () => {
         let abilityRes = []
         pokemon.abilities[0] && abilityRes.push(await axios.get(pokemon.abilities[0].ability.url))
@@ -76,145 +81,145 @@ export default function PokeAPI() {
         setAbilities(abilityData)
       }
 
-      const flavorArray = species.flavor_text_entries
-      const desc = flavorArray.filter(flavor => flavor.language.name==='en')
-      let formattedDesc = desc[0].flavor_text
-        .replace('',' ')
-        .replace('­\n', '')
-        .replace(/\b[A-Z]+\b/g, (word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
-      setDescription(formattedDesc)
+      // const flavorArray = species.flavor_text_entries
+      // const desc = flavorArray.filter(flavor => flavor.language.name==='en')
+      // let formattedDesc = desc[0].flavor_text
+      //   .replace('',' ')
+      //   .replace('­\n', '')
+      //   .replace(/\b[A-Z]+\b/g, (word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
+      // setDescription(formattedDesc)
 
-      const getTypeDecoration = () => {
-        let bg
-        let circ
-        let icon
-        switch (pokemon.types[0].type.name){
-          // Condsider changing colors to reflect more types
-          case 'bug':
-            bg = (bgGreen)
-            circ = ("bg-green-700")
-            icon = (FaBug)
-            break
-          case 'dark':
-            bg = (bgPurple)
-            circ = ("bg-purple-500")
-            icon = (WiMoonAltWaxingCrescent3)
-            break
-          case 'dragon':
-            bg = (bgWhite)
-            circ = ("bg-slate-300")
-            icon = (GiDragonSpiral)
-            break
-          case 'electric':
-            bg = (bgYellow)
-            circ = ("bg-yellow-300")
-            icon = (AiFillThunderbolt)
-            break
-          case 'fairy':
-            bg = (bgPurple)
-            circ = ("bg-purple-500")
-            icon = (HiOutlineSparkles)
-            break
-          case 'fighting':
-            bg = (bgOrange)
-            circ = ("bg-yellow-600")
-            icon = (FaFistRaised)
-            break
-          case 'fire':
-            bg = (bgRed)
-            circ = ("bg-red-600")
-            icon = (HiFire)
-            break
-          case 'flying':
-            bg = (bgWhite)
-            circ = ("bg-slate-300")
-            icon = (FaFeatherAlt)
-            break
-          case 'ghost':
-            bg = (bgPurple)
-            circ = ("bg-purple-500")
-            icon = (FaGhost)
-            break
-          case 'grass':
-            bg = (bgGreen)
-            circ = ("bg-green-700")
-            icon = (FaLeaf)
-            break
-          case 'ground':
-            bg = (bgOrange)
-            circ = ("bg-yellow-600")
-            icon = (FaMountain)
-            break
-          case 'ice':
-            bg = (bgBlue)
-            circ = ("bg-blue-500")
-            icon = (TbSnowflake)
-            break
-          case 'normal':
-            bg = (bgWhite)
-            circ = ("bg-slate-300")
-            icon = (BsRecordCircleFill)
-            break
-          case 'poison':
-            bg = (bgPurple)
-            circ = ("bg-purple-500")
-            icon = (FaSkull)
-            break
-          case 'psychic':
-            bg = (bgPurple)
-            circ = ("bg-purple-500")
-            icon = (FaEye)
-            break
-          case 'rock':
-            bg = (bgOrange)
-            circ = ("bg-yellow-600")
-            icon = (GiStoneSphere)
-            break
-          case 'steel':
-            bg = (bgGrey)
-            circ = ("bg-slate-400")
-            icon = (BsNutFill)
-            break
-          case 'water':
-            bg = (bgBlue)
-            circ = ("bg-blue-500")
-            icon = (BsDropletFill)
-            break            
-        }
-        setBgImage(bg)
-        setTypeIcon(icon)
-        setCircleColor(circ)
-      }
+    //   const getTypeDecoration = () => {
+    //     let bg
+    //     let circ
+    //     let icon
+    //     switch (pokemon.types[0].type.name){
+    //       // Condsider changing colors to reflect more types
+    //       case 'bug':
+    //         bg = (bgGreen)
+    //         circ = ("bg-green-700")
+    //         icon = (FaBug)
+    //         break
+    //       case 'dark':
+    //         bg = (bgPurple)
+    //         circ = ("bg-purple-500")
+    //         icon = (WiMoonAltWaxingCrescent3)
+    //         break
+    //       case 'dragon':
+    //         bg = (bgWhite)
+    //         circ = ("bg-slate-300")
+    //         icon = (GiDragonSpiral)
+    //         break
+    //       case 'electric':
+    //         bg = (bgYellow)
+    //         circ = ("bg-yellow-300")
+    //         icon = (AiFillThunderbolt)
+    //         break
+    //       case 'fairy':
+    //         bg = (bgPurple)
+    //         circ = ("bg-purple-500")
+    //         icon = (HiOutlineSparkles)
+    //         break
+    //       case 'fighting':
+    //         bg = (bgOrange)
+    //         circ = ("bg-yellow-600")
+    //         icon = (FaFistRaised)
+    //         break
+    //       case 'fire':
+    //         bg = (bgRed)
+    //         circ = ("bg-red-600")
+    //         icon = (HiFire)
+    //         break
+    //       case 'flying':
+    //         bg = (bgWhite)
+    //         circ = ("bg-slate-300")
+    //         icon = (FaFeatherAlt)
+    //         break
+    //       case 'ghost':
+    //         bg = (bgPurple)
+    //         circ = ("bg-purple-500")
+    //         icon = (FaGhost)
+    //         break
+    //       case 'grass':
+    //         bg = (bgGreen)
+    //         circ = ("bg-green-700")
+    //         icon = (FaLeaf)
+    //         break
+    //       case 'ground':
+    //         bg = (bgOrange)
+    //         circ = ("bg-yellow-600")
+    //         icon = (FaMountain)
+    //         break
+    //       case 'ice':
+    //         bg = (bgBlue)
+    //         circ = ("bg-blue-500")
+    //         icon = (TbSnowflake)
+    //         break
+    //       case 'normal':
+    //         bg = (bgWhite)
+    //         circ = ("bg-slate-300")
+    //         icon = (BsRecordCircleFill)
+    //         break
+    //       case 'poison':
+    //         bg = (bgPurple)
+    //         circ = ("bg-purple-500")
+    //         icon = (FaSkull)
+    //         break
+    //       case 'psychic':
+    //         bg = (bgPurple)
+    //         circ = ("bg-purple-500")
+    //         icon = (FaEye)
+    //         break
+    //       case 'rock':
+    //         bg = (bgOrange)
+    //         circ = ("bg-yellow-600")
+    //         icon = (GiStoneSphere)
+    //         break
+    //       case 'steel':
+    //         bg = (bgGrey)
+    //         circ = ("bg-slate-400")
+    //         icon = (BsNutFill)
+    //         break
+    //       case 'water':
+    //         bg = (bgBlue)
+    //         circ = ("bg-blue-500")
+    //         icon = (BsDropletFill)
+    //         break            
+    //     }
+    //     setBgImage(bg)
+    //     setTypeIcon(icon)
+    //     setCircleColor(circ)
+    //   }
       getAbilityData()
-      getTypeDecoration()
+    //   getTypeDecoration()
     }
   },[pokemon, species])
 
-  useEffect(() => {
-    if(abilities){
-      console.log(abilities)
-      setAbilityArray([])
-      const newAbilities = []
-      for (const a of abilities){
-        const abilityObj ={}
+  // useEffect(() => {
+  //   if(abilities){
+  //     console.log(abilities)
+  //     setAbilityArray([])
+  //     const newAbilities = []
+  //     for (const a of abilities){
+  //       const abilityObj ={}
 
-        const abilityArr = a.names
-        const name = abilityArr.filter(name => name.language.name==='en')
-        abilityObj.abilityName=name[0].name
+  //       const abilityArr = a.names
+  //       const name = abilityArr.filter(name => name.language.name==='en')
+  //       abilityObj.abilityName=name[0].name
 
-        const abilityFlavorArray = a.flavor_text_entries
-        const desc = abilityFlavorArray.filter(flavor => flavor.language.name==='en')
-        let formattedDesc = desc[0].flavor_text
-          .replace(/\b[A-Z]+\b/g, (word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
-          .replace('Pp', 'PP')
-          .replace('Hp', 'HP')
-        abilityObj.abilityDescription=formattedDesc
-        newAbilities.push(abilityObj)
+  //       const abilityFlavorArray = a.flavor_text_entries
+  //       const desc = abilityFlavorArray.filter(flavor => flavor.language.name==='en')
+  //       let formattedDesc = desc[0].flavor_text
+  //         .replace(/\b[A-Z]+\b/g, (word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
+  //         .replace('Pp', 'PP')
+  //         .replace('Hp', 'HP')
+  //       abilityObj.abilityDescription=formattedDesc
+  //       newAbilities.push(abilityObj)
 
-        setAbilityArray(newAbilities)
-      }
-    }
-  },[abilities])
+  //       setAbilityArray(newAbilities)
+  //     }
+  //   }
+  // },[abilities])
 
 
 
@@ -233,22 +238,23 @@ export default function PokeAPI() {
     }
 }
 
-useEffect(() => {
-  const faviconUpdate = async () => {
-    //grab favicon element by ID
-    const favicon = document.getElementById("favicon")
-    //  CHANGE 'NAME' TO SOMETHING ELSE
-    if (pokemon.name) {
-      favicon.href = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`
-    } else {
-      favicon.href = "../pokeball.svg"
+  useEffect(() => {
+    const faviconUpdate = async () => {
+      //grab favicon element by ID
+      const favicon = document.getElementById("favicon")
+      //  CHANGE 'NAME' TO SOMETHING ELSE
+      if (pokemon.name) {
+        favicon.href = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`
+      } else {
+        favicon.href = "../pokeball.svg"
+      }
     }
-  }
-  faviconUpdate()
-}, [pokemon])
+    faviconUpdate()
+  }, [pokemon])
 
   return (
     <div>
+      <h1 className="text-6xl mb-4">Search for a Pokémon!</h1>
       <div>
         <form onSubmit={handleSubmit}>
           <div className="form-conrol">
@@ -265,8 +271,14 @@ useEffect(() => {
           </div>
         </form>
 
+        <PokeCard 
+        pokemon={pokemon}
+        species={species}
+        abilities={abilities}
+        />
 
-        {pokemon.id<=905 ?
+        {/* {pokemon.id<=905 ?
+          
           <div className="container mx-auto card-outer p-5 m-10 bg-yellow-300 rounded-3xl text-black font-futura w-96">
             <div style={{ backgroundImage: `url(${bgImage})` }}className="card-inner p-3 bg-hero bg-no-repeat bg-cover bg-center">
               <div className="card-top flex text-2xl mx-3">
@@ -337,9 +349,10 @@ useEffect(() => {
               </div>
             </div>        
           </div>
+
           :
           find && <p>Oops! Couldn't find that Pokémon, sorry! </p>
-        }        
+        }         */}
       </div>
     </div>
   )
