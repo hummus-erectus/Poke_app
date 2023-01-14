@@ -1,0 +1,10 @@
+/* @import url(//db.onlinewebfonts.com/c/da950f2527dc01bebcbedd536e38c145?family=Futura); */
+@font-face {
+    font-family: "futura";   
+    src: local("Futura Bold font"),
+      url("./fonts/Futura Bold font.ttf") format("truetype");
+  }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
