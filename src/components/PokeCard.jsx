@@ -18,10 +18,8 @@ import bgWhite from '../assets/bgWhite.jpg'
 import bgYellow from '../assets/bgYellow.jpg'
 import bgRed from '../assets/bgRed.jpg'
 
-function PokeCard({pokeObj}) {
+function PokeCard({pokeObj, loading, setLoading}) {
   const {pokemon, species, abilities} = pokeObj
-
-  const [loading, setLoading] = useState(true)
 
   const [description, setDescription] = useState('')
   const [bgImage, setBgImage] = useState('')
@@ -30,12 +28,18 @@ function PokeCard({pokeObj}) {
 
   const [abilityArray, setAbilityArray] = useState([])
 
-  useEffect(() => {
+  const handleImageLoaded = () => {
+    setLoading(false) 
+    console.log('image loaded')
+  }
 
+  useEffect(() => {
     if(pokeObj){
       if(pokemon.id>905){
         return
       }
+      
+
 
       const flavorArray = species.flavor_text_entries
       const desc = flavorArray.filter(flavor => flavor.language.name==='en')
@@ -170,7 +174,6 @@ function PokeCard({pokeObj}) {
           newAbilities.push(abilityObj)
   
           setAbilityArray(newAbilities)
-          console.log('done')
         }  
    
         
@@ -180,11 +183,19 @@ function PokeCard({pokeObj}) {
 
   },[pokeObj])
   
+  useEffect(() => {
+    const image = new Image();
+    image.onload = handleImageLoaded
+    image.src = bgImage;
+
+  }, [bgImage]);
+  
   
     return (
+        
         <div>
-          {pokemon.id<=905 ?
-            
+          {!loading &&
+          
             <div className="container mx-auto card-outer p-5 m-10 bg-yellow-300 rounded-3xl text-black font-futura w-96">
               <div style={{ backgroundImage: `url(${bgImage})` }}className="card-inner p-3 bg-hero bg-no-repeat bg-cover bg-center">
                 <div className="card-top flex text-2xl mx-3">
@@ -255,11 +266,12 @@ function PokeCard({pokeObj}) {
                 </div>
               </div>        
             </div>
-  
-            :
-            find && <p>Oops! Couldn't find that Pokémon, sorry! </p>
-          }        
+
+
+            // find && <p>Oops! Couldn't find that Pokémon, sorry! </p>
+                }
         </div>
+        
     )
   
   

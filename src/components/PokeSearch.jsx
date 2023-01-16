@@ -5,7 +5,7 @@ import axios from "axios"
 export default function PokeAPI() {
   const [text, setText] = useState('')
   const [find, setFind] = useState("")
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
 
   const [pokemon, setPokemon] = useState('')
   const [species, setSpecies] = useState('')
@@ -13,8 +13,10 @@ export default function PokeAPI() {
   const [pokeObj, setPokeObj] = useState(null)
   
   useEffect(() => {
-    console.log('started load')
+    
     if(find){
+      console.log('started load')
+      setLoading(true)
       setPokemon('')
       setSpecies('')
       const getData = async () => {
@@ -27,6 +29,11 @@ export default function PokeAPI() {
           }
         catch (error) {
           console.log(error)
+          setLoading(false)
+          // setPokemon('')
+          // setSpecies('')
+          setPokeObj('')
+          alert("Oops, couldn't find that Pokémon!")
         }
       }
       getData()
@@ -49,7 +56,6 @@ export default function PokeAPI() {
       }
       
       getAbilityData()
-      setLoading(false)
     }
   },[pokemon, species])
 
@@ -60,8 +66,9 @@ export default function PokeAPI() {
         species: species,
         abilities: abilities
       })
+      console.log('finished load')
     }
-    console.log('finished load')
+    
 
   }, [abilities])
   
@@ -83,12 +90,12 @@ export default function PokeAPI() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    
 
     if(text === ''){
         alert('Please enter something', 'error')
     } else {
         setFind(text.toLowerCase())
-
         setText('')
     }
 }
@@ -116,7 +123,10 @@ export default function PokeAPI() {
 
         {pokeObj && <PokeCard 
           pokeObj={pokeObj}
+          loading={loading}
+          setLoading={setLoading}
         />}
+        {loading && <p>Loading...</p>}
 
       </div>
     </div>
