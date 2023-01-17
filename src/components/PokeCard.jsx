@@ -9,7 +9,7 @@ import { AiFillThunderbolt } from "react-icons/ai"
 import { WiMoonAltWaxingCrescent3 } from "react-icons/wi"
 
 //Change all to png?
-import bgBlue from '../assets/bgBlue.jpg'
+import bgBlue from '../assets/bgBlue.jpg' 
 import bgGreen from '../assets/bgGreen.jpg'
 import bgGrey from '../assets/bgGrey.jpg'
 import bgOrange from '../assets/bgOrange.jpg'
@@ -18,10 +18,11 @@ import bgWhite from '../assets/bgWhite.jpg'
 import bgYellow from '../assets/bgYellow.jpg'
 import bgRed from '../assets/bgRed.jpg'
 
-function PokeCard({pokeObj, loading, setLoading}) {
+function PokeCard({pokeObj, loading, setLoading, imagesLoaded, setImagesLoaded}) {
   const {pokemon, species, abilities} = pokeObj
 
   const [description, setDescription] = useState('')
+  const [pokeImage, setPokeImage] = useState('')
   const [bgImage, setBgImage] = useState('')
   const [typeIcon, setTypeIcon] = useState('')
   const [circleColor, setCircleColor] = useState('')
@@ -29,9 +30,16 @@ function PokeCard({pokeObj, loading, setLoading}) {
   const [abilityArray, setAbilityArray] = useState([])
 
   const handleImageLoaded = () => {
-    setLoading(false) 
-    console.log('image loaded')
+    setImagesLoaded ((prevState) => prevState+1)
   }
+
+
+  useEffect(() =>{
+    if(imagesLoaded===2){
+      setLoading(false) 
+      console.log('images loaded')
+    }
+  }, [imagesLoaded])
 
   useEffect(() => {
     if(pokeObj){
@@ -39,7 +47,7 @@ function PokeCard({pokeObj, loading, setLoading}) {
         return
       }
       
-
+      
 
       const flavorArray = species.flavor_text_entries
       const desc = flavorArray.filter(flavor => flavor.language.name==='en')
@@ -72,7 +80,7 @@ function PokeCard({pokeObj, loading, setLoading}) {
             break
           case 'electric':
             bg = (bgYellow)
-            circ = ("bg-yellow-300")
+            circ = ("bg-yellow-400")
             icon = (AiFillThunderbolt)
             break
           case 'fairy':
@@ -152,6 +160,9 @@ function PokeCard({pokeObj, loading, setLoading}) {
       }
       getTypeDecoration()
 
+      setPokeImage(pokemon.sprites.other['official-artwork'].front_default)
+
+
       
       const getAbilities = () => {
 
@@ -184,11 +195,22 @@ function PokeCard({pokeObj, loading, setLoading}) {
   },[pokeObj])
   
   useEffect(() => {
-    const image = new Image();
-    image.onload = handleImageLoaded
-    image.src = bgImage;
+    const image1 = new Image()
+    image1.onload = handleImageLoaded
+    image1.src = bgImage
 
-  }, [bgImage]);
+    const image2 = new Image()
+    image2.onload = handleImageLoaded
+    image2.src = pokeImage
+
+  }, [bgImage, pokeImage])
+
+  // useEffect(() => {
+  //   const image2 = new Image()
+  //   image2.onload = handleImageLoaded
+  //   image2.src = pokeImage
+
+  // }, [pokeImage])
   
   
     return (
@@ -207,7 +229,7 @@ function PokeCard({pokeObj, loading, setLoading}) {
                 </div>
                 <div className="picture-border-container mx-3 bg-gradient-to-br from-yellow-200 via-yellow-600 to-yellow-200 p-2 drop-shadow-md">
                   <div className="card-picture bg-orange-200 h-48">
-                    <img className="h-full mx-auto" src={`${pokemon.sprites.other['official-artwork'].front_default}`} alt={pokemon.name} />
+                    <img className="h-full mx-auto" src={`${pokeImage}`} alt={pokemon.name} />
                   </div>
                 </div>
                 <div className="under-image">
@@ -246,7 +268,7 @@ function PokeCard({pokeObj, loading, setLoading}) {
                     abilityArray && abilityArray.map((a) => {
                       return (
                         <>
-                          <div key={a.id} className="ability-box mx-10 h-20 flex items-center ">
+                          <div key={a.abilityName} className="ability-box mx-10 h-20 flex items-center ">
                             <div className="ability-name inline text-lg leading-3">
                               {a.abilityName}
                               <span className="ability-desc text-sm pl-3">{a.abilityDescription}</span>

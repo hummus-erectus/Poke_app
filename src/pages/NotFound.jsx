@@ -8,7 +8,7 @@ function NotFound() {
         <div className="text-center hero-content">
             <div className="max-w-lg">
                 <h1 className="text-8xl font-bold mb-8">
-                    4{TbPokeball}4
+                    4<TbPokeball className="inline mb-4"/>4
                 </h1>
                 <p className="text-5xl mb-8">Sorry, there's nothing here!</p>
                 <Link to='/' className="btn btn-primary btn-lg">

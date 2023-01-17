@@ -1,5 +1,4 @@
 import PokeSearch from "../components/PokeSearch"
-import PokeCard from "../components/PokeCard"
 
 function Home() {
 
@@ -7,7 +6,6 @@ function Home() {
   return (
     <div>
         <PokeSearch />
-        {/* <PokeCard /> */}
     </div>
   )
 }

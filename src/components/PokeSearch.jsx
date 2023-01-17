@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react"
 import PokeCard from "./PokeCard"
 import axios from "axios"
+import Spinner from "./Spinner"
 
 export default function PokeAPI() {
   const [text, setText] = useState('')
   const [find, setFind] = useState("")
   const [loading, setLoading] = useState(false)
+  const [imagesLoaded, setImagesLoaded] = useState(0)
 
   const [pokemon, setPokemon] = useState('')
   const [species, setSpecies] = useState('')
@@ -17,6 +19,7 @@ export default function PokeAPI() {
     if(find){
       console.log('started load')
       setLoading(true)
+      setImagesLoaded(0)
       setPokemon('')
       setSpecies('')
       const getData = async () => {
@@ -125,8 +128,10 @@ export default function PokeAPI() {
           pokeObj={pokeObj}
           loading={loading}
           setLoading={setLoading}
+          imagesLoaded={imagesLoaded}
+          setImagesLoaded={setImagesLoaded}
         />}
-        {loading && <p>Loading...</p>}
+        {loading && <Spinner />}
 
       </div>
     </div>
