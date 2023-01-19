@@ -45,20 +45,25 @@ export default function PokeAPI() {
 
   useEffect(() => {
     if(pokemon && species){
-      
-      // Try to refactor this
-
-      const getAbilityData = async () => {
-        let abilityRes = []
-        pokemon.abilities[0] && abilityRes.push(await axios.get(pokemon.abilities[0].ability.url))
-        pokemon.abilities[1] && abilityRes.push(await axios.get(pokemon.abilities[1].ability.url))
-        let abilityData = []
-        abilityRes[0] && abilityData.push(abilityRes[0].data)
-        abilityRes[1] && abilityData.push(abilityRes[1].data)
-        setAbilities(abilityData)       
+      if(pokemon.id>905){
+        setPokemon('')
+        setSpecies('')
+        setPokeObj('')
+        setLoading(false)
+        alert("Oops, couldn't find that Pokémon!")
+        
+      } else {
+        const getAbilityData = async () => {
+          let abilityRes = []
+          pokemon.abilities[0] && abilityRes.push(await axios.get(pokemon.abilities[0].ability.url))
+          pokemon.abilities[1] && abilityRes.push(await axios.get(pokemon.abilities[1].ability.url))
+          let abilityData = []
+          abilityRes[0] && abilityData.push(abilityRes[0].data)
+          abilityRes[1] && abilityData.push(abilityRes[1].data)
+          setAbilities(abilityData)       
+        } 
+        getAbilityData()
       }
-      
-      getAbilityData()
     }
   },[pokemon, species])
 
