@@ -120,7 +120,7 @@ export default function PokeAPI() {
                   <input 
                       type="text" 
                       className="w-full pr-40 bg-gray-200 input input-lg text-black" 
-                      placeholder="Search"
+                      placeholder="Name or Pokédex ID number of the Pokémon to display"
                       value={text}
                       onChange={handleChange}
                   />
